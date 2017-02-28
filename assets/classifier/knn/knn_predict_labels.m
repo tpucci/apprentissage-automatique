@@ -21,7 +21,15 @@ function [y_pred] = knn_predict_labels(model, dists, k)
 %     # neighbors. Store these labels in closest_y.                           #
 %     # Hint: Look up the function sort                             #
 %     #########################################################################
-        your code 
+
+        closest_y = zeros(size(dists,2),k);
+        for i = 1:size(dists,1)
+                dist_i = dist(i,:);
+                [dist_i_sorted,indexes] = sort(dist_i);
+                k_first_indexes = indexes(1:k);
+                closest_y(i,:) = model.y_train(k_first_indexes,2);
+        end
+
 % 
 %     #########################################################################
 %     # TODO:                                                                 #
