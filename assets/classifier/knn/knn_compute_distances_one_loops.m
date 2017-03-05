@@ -21,7 +21,7 @@ function [ dists ] = knn_compute_distances_one_loops( model, X )
 %       # points, and store the result in dists[i, :].                        #
 %       #######################################################################
 
-        your code
+        dists(i,:) = (sum((model.X_train - repmat(X(i,:), num_train, 1)).^2, 2)).^0.5;
         
 %       #####################################################################
 %       #                       END OF YOUR CODE                            #

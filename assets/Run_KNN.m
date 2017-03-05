@@ -135,7 +135,8 @@ y_train_folds = {};
 % # Hint: Look up the mat2cell function.                                #
 % ################################################################################
 
-your code 
+X_train_folds= mat2cell(model.X_train, [1000,1000,1000,1000,1000])
+X_train_folds= mat2cell(model.Y_train, [1000,1000,1000,1000,1000]) 
 
 % ################################################################################
 % #                                 END OF YOUR CODE                             #

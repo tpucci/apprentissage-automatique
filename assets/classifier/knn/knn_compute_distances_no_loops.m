@@ -20,7 +20,9 @@ function [ dists ] = knn_compute_distances_no_loops( model, X )
 %     #       and two broadcast sums.                                         #
 %     #########################################################################
     
-      your code
+      num_test = size(X,1);
+      num_train = size(model.X_train, 1);
+      dists = (sum(X.^2,2)*ones(1,num_train) + ones(num_test,1)*sum(model.X_train.^2,2)' - X*model.X_train'.*2).^0.5;
     
 %     #####################################################################
 %     #                       END OF YOUR CODE                            #
