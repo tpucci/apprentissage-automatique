@@ -135,8 +135,8 @@ y_train_folds = {};
 % # Hint: Look up the mat2cell function.                                #
 % ################################################################################
 
-X_train_folds= mat2cell(imdb.train_data, ones(1,num_folds)*(size(imdb.train_data,1)/num_folds))
-y_train_folds= mat2cell(imdb.train_labels, ones(1,num_folds)*(size(imdb.train_labels,1)/num_folds)) 
+X_train_folds= mat2cell(imdb.train_data, ones(1,num_folds)*(size(imdb.train_data,1)/num_folds));
+y_train_folds= mat2cell(imdb.train_labels, ones(1,num_folds)*(size(imdb.train_labels,1)/num_folds));
 
 % ################################################################################
 % #                                 END OF YOUR CODE                             #
@@ -162,11 +162,11 @@ for i = 1:length(k_choices)
     for j = 1:num_folds
 	   model = knn_train(cell2mat(X_train_folds(setdiff(1:num_folds,j))), cell2mat(y_train_folds(setdiff(1:num_folds,j))));
 	   dists_no = knn_compute_distances_no_loops(model, cell2mat(X_train_folds(j)));
-	   test_labels_pred = knn_predict_labels(model, dists_no, k);
+	   test_labels_pred = knn_predict_labels(model, dists_no, k_choices(i));
        num_correct = sum(sum(test_labels_pred == cell2mat(y_train_folds(j))));
-       num_test = length(y_train_folds(j))));
+       num_test = length(cell2mat(y_train_folds(j)));
        accuracy = double(num_correct)/num_test;
-	   k_to_accuracies(i,j)=accuracy
+	   k_to_accuracies(i,j)=accuracy;
 	end
 end 
 

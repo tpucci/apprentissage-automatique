@@ -24,7 +24,7 @@ function [dists] = knn_compute_distances_two_loops(model, X)
 %         # training point, and store the result in dists[i, j]               #
 %         #####################################################################
 
-          dists(i,j)= sqrt(sum((X(i,:)-model.X_train(j,:)).^2);
+          dists(i,j)= (sum((X(i,:)-model.X_train(j,:)).^2))^.5;
 		
           
 %         #####################################################################
