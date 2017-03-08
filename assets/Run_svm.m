@@ -109,12 +109,12 @@ fprintf('loss: %f\n',loss);
 % compare them with your analytically computed gradient. The numbers should match
 % almost exactly along all dimensions.
 f = @(x)svm_loss_naive(x, imdb.X_train, imdb.y_train, 0.0);
-grad_check_sparse(f, W, grad, 10);
+%%%%% grad_check_sparse(f, W, grad, 10);
 disp('==========================================');
 %do the gradient check once again with regularization turned on
 %you didn't forget the regularization gradient did you?
 f = @(x)svm_loss_naive(x, imdb.X_train, imdb.y_train, 1e2);
-grad_check_sparse(f, W, grad, 10);
+%%%%% grad_check_sparse(f, W, grad, 10);
 
 %% Next implement the function svm_loss_vectorized; for now only compute the loss;
 % we will implement the gradient in a moment.
@@ -208,12 +208,12 @@ best_svm = struct(); %The LinearSVM model that achieved the highest validation r
 iter_num = 100;
 for learning = learning_rates
     for regularization = regularization_strengths
-        [model, loss_hist] = linear_svm_train(X_train, y_train, learning, regularization, 2000);
+        [model, loss_hist] = linear_svm_train(imdb.X_train, imdb.y_train, learning, regularization, 2000);
         y_train_pred = linear_svm_predict(model, imdb.X_train);
-        train_accuracy = mean(y_train == y_train_pred);
+        train_accuracy = mean(imdb.y_train == y_train_pred);
         fprintf('training accuracy: %f', train_accuracy); % (train_accuracy)
-        y_val_pred = linear_svm_predict(X_val);
-        val_accuracy = mean(y_val == y_val_pred);
+        y_val_pred = linear_svm_predict(model, imdb.X_val);
+        val_accuracy = mean(imdb.y_val' == y_val_pred);
         fprintf('validation accuracy: %f', val_accuracy);  % (val_accuracy)
         
         if val_accuracy > best_val

@@ -54,7 +54,9 @@ function [ model, loss_hist ] = linear_softmax_train(X, y, learning_rate, reg, n
 %       # Hint: Use randsample to generate indices. Sampling with         #
 %       # replacement is faster than sampling without replacement.              #
 %       #########################################################################
-        your code
+        rand_idx = randsample(num_train, batch_size);
+        X_batch = X(rand_idx, :);
+        y_batch = y(rand_idx);
         
 %       #########################################################################
 %       #                       END OF YOUR CODE                                #
@@ -69,7 +71,7 @@ function [ model, loss_hist ] = linear_softmax_train(X, y, learning_rate, reg, n
 %       # TODO:                                                                 #
 %       # Update the weights using the gradient and the learning rate.          #
 %       #########################################################################
-        your code 
+        W = W - learning_rate * grad;
 %       #########################################################################
 %       #                       END OF YOUR CODE                                #
 %       #########################################################################
