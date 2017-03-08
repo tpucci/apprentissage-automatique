@@ -23,7 +23,16 @@ num_train = size(X, 1);
 % # result in loss.                                                           #
 % #############################################################################
 
-your code 
+scores = W * X';
+correct_class_score = diag(scores(y,:))*ones(1,num_train);
+L = scores - correct_class_score + 1; % delta = 1
+
+L(L<0) = 0;
+loss = sum(sum(L))- 1*num_train; % On retire les Lyi comptés en trop
+loss = loss/num_train;
+
+% Regularization
+loss = loss + 0.5 * reg * sum(sum((W.*W)));
 
 % #############################################################################
 % #                             END OF YOUR CODE                              #
@@ -39,7 +48,12 @@ your code
 % # loss.                                                                     #
 % #############################################################################
 
-your code 
+L(L>0) = 1;
+substract = -sum(L)+1;
+for i = 1:num_train
+    L(y(i),i)=substract(i);
+end
+dW=L*X;
 
 % #############################################################################
 % #                             END OF YOUR CODE                              #
