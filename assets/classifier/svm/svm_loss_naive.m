@@ -28,6 +28,8 @@ for i = 1:num_train
       if margin > 0
         loss = loss + margin;
         %your code 
+        dW(j,:) = dW(j,:) + X(i, :);
+        dW(y(i),:) = dW(j,:) - X(i, :);
       end
     end
 end
@@ -37,13 +39,15 @@ end
 loss = loss/num_train;
 
 % Average gradients as well
-% your code 
+%your code 
+dW = dW/num_train;
 
 % Add regularization to the loss.
 loss = loss + 0.5 * reg * sum(sum((W.*W)));
 
 % Add regularization to the gradient
 % your code
+dW = dW + reg * W;
   
 % #############################################################################
 % # TODO:                                                                     #
