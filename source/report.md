@@ -36,6 +36,10 @@ Ce Bureau d'étude est réalisé sous le logiciel `Matlab`.
 
 -----
 
+# SVM
+
+The gradient could not be strictly differentiable, as in our hinge loss case. In a 1D case, a point right before the hinge should have an analytical gradient of 0, while the numerical gradient would be greater than 0.
+
 # Conclusion
 
 Ce bureau d'étude nous a permis de réaliser...

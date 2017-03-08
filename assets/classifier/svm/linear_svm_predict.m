@@ -16,8 +16,8 @@ function [ y_pred ] = linear_svm_predict( model, X )
 %     # TODO:                                                                   #
 %     # Implement this method. Store the predicted labels in y_pred.            #
 %     ###########################################################################
-        your code
-        
+        scores = model.W * X';
+        [~,y_pred] = max(scores);
 %     ###########################################################################
 %     #                           END OF YOUR CODE                              #
 %     ###########################################################################

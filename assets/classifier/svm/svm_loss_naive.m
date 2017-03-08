@@ -29,7 +29,7 @@ for i = 1:num_train
         loss = loss + margin;
         %your code 
         dW(j,:) = dW(j,:) + X(i, :);
-        dW(y(i),:) = dW(j,:) - X(i, :);
+        dW(y(i),:) = dW(y(i),:) - X(i, :);
       end
     end
 end

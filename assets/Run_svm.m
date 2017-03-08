@@ -187,7 +187,7 @@ regularization_strengths = [1e4, 2e4, 3e4, 4e4, 5e4, 6e4, 7e4, 8e4, 1e5];
 % (learning_rate, regularization_strength) to tuples of the form
 % (training_accuracy, validation_accuracy). The accuracy is simply the fraction
 % of data points that are correctly classified.
-results = zeros(length(learning_rates), length(regularization_strengths), 2); %a matrix resotres results
+results = zeros(length(learning_rates), length(regularization_strengths), 2); %la matrix resotres results
 best_val = -1;   %The highest validation accuracy that we have seen so far.
 best_svm = struct(); %The LinearSVM model that achieved the highest validation rate.
 
@@ -204,9 +204,26 @@ best_svm = struct(); %The LinearSVM model that achieved the highest validation r
 % # confident that your validation code works, you should rerun the validation   #
 % # code with a larger value for num_iters.                                      #
 % ################################################################################
-iter_num = 1000;
-%iter_num = 100;
-your code 
+%iter_num = 1000;
+iter_num = 100;
+for learning = learning_rates
+    for regularization = regularization_strengths
+        [model, loss_hist] = linear_svm_train(X_train, y_train, learning, regularization, 2000);
+        y_train_pred = linear_svm_predict(model, imdb.X_train);
+        train_accuracy = mean(y_train == y_train_pred);
+        fprintf('training accuracy: %f', train_accuracy); % (train_accuracy)
+        y_val_pred = linear_svm_predict(X_val);
+        val_accuracy = mean(y_val == y_val_pred);
+        fprintf('validation accuracy: %f', val_accuracy);  % (val_accuracy)
+        
+        if val_accuracy > best_val
+            best_val = val_accuracy;
+            best_svm = model;
+        end
+        
+        results(learning, regularization) = [train_accuracy, val_accuracy];
+    end
+end
 % ################################################################################
 % #                              END OF YOUR CODE                                #
 % ################################################################################

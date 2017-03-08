@@ -23,8 +23,11 @@ num_train = size(X, 1);
 % # result in loss.                                                           #
 % #############################################################################
 
+num_classes = size(W,1);
+
 scores = W * X';
-correct_class_score = diag(scores(y,:))*ones(1,num_train);
+correct_indexes = (0:num_train-1)*num_classes+double(y');
+correct_class_score = ones(num_classes,1)*scores(correct_indexes);
 L = scores - correct_class_score + 1; % delta = 1
 
 L(L<0) = 0;
@@ -49,11 +52,12 @@ loss = loss + 0.5 * reg * sum(sum((W.*W)));
 % #############################################################################
 
 L(L>0) = 1;
-substract = -sum(L)+1;
-for i = 1:num_train
-    L(y(i),i)=substract(i);
-end
+L(correct_indexes) = -sum(L);
 dW=L*X;
+
+dW = dW/num_train;
+% Add regularization to the gradient
+dW = dW + reg * W;
 
 % #############################################################################
 % #                             END OF YOUR CODE                              #
