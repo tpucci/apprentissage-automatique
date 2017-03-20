@@ -34,7 +34,8 @@ function [ loss, grads ] = twolayernet_loss( model, X, y, reg )
 %   # shape (N, C).            
 %   # Hint: input - fully connected layer - ReLU - fully connected layer
 %   #############################################################################
-    your code 
+    hidden_layer = max(0, (X*model.W1)+model.b1);
+    scores = (hidden_layer*W2) +model.b2; 
     
 %   #############################################################################
 %   #                              END OF YOUR CODE                             #
