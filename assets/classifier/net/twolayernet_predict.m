@@ -18,7 +18,9 @@ function [ y_pred ] = twolayernet_predict( model, X )
 %     ###########################################################################
 %     # TODO: Implement this function; it should be VERY simple!                #
 %     ###########################################################################
-      your code 
+      scores = twolayernet_loss( model, X);
+      [~,y_pred] = max(scores,[],2); 
+      y_pred = y_pred'; 
       
 %     ###########################################################################
 %     #                              END OF YOUR CODE                           #

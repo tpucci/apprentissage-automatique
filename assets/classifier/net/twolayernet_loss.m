@@ -34,13 +34,15 @@ function [ loss, grads ] = twolayernet_loss( model, X, y, reg )
 %   # shape (N, C).            
 %   # Hint: input - fully connected layer - ReLU - fully connected layer
 %   #############################################################################
-    your code 
+    res=X * model.W1 + repmat(model.b1,N,1);
+    hidden_layer = max(0,res);
+    scores =hidden_layer * model.W2 + repmat(model.b2,N,1); 
     
 %   #############################################################################
 %   #                              END OF YOUR CODE                             #
 %   #############################################################################
     if (nargin == 2) || (nargin==3 && isscalar(y))
-        loss = layer2;
+        loss = scores;
         return;
     end
     
@@ -53,8 +55,16 @@ function [ loss, grads ] = twolayernet_loss( model, X, y, reg )
 %   # classifier loss. So that your results match ours, multiply the            #
 %   # regularization loss by 0.5                                                #
 %   #############################################################################
-    your code 
+    scores = scores - repmat(max(scores,[],2),1,size(scores,2));
+
+    scores = exp(scores) ./ repmat(sum(exp(scores),2),1,size(scores,2)); 
+	true_class = false(size(scores));
+	true_class(sub2ind(size(scores),1:N,y')) = 1; 
+	loss = - sum(sum(true_class .* log(scores)));
     
+    loss = loss ./ N;
+    loss = loss + 0.5 * reg * (sum(sum((model.W1.*model.W1))) + sum(sum((model.W2.*model.W2))));
+	
 %   #############################################################################
 %   #                              END OF YOUR CODE                             #
 %   #############################################################################
@@ -67,7 +77,24 @@ function [ loss, grads ] = twolayernet_loss( model, X, y, reg )
 %   # and biases. Store the results in the grads struct. For example,       #
 %   # grads.W1 should store the gradient on W1, and be a matrix of same size #
 %   #############################################################################
-    your code 
+    dout2 = (scores - true_class) ./ N;
+    dW2 = hidden_layer' * dout2;
+    db2 = ones(N,1)' * dout2;
+    
+    dout1 = dout2 * model.W2';
+    dout1(res < 0) = 0;
+    
+    dW1 = X' * dout1;
+    db1 = ones(N,1)' * dout1;
+    
+    dW2 = dW2 + reg * model.W2;
+    dW1 = dW1 + reg * model.W1;
+    
+    grads.W1 = dW1;
+    grads.b1 = db1;
+    grads.W2 = dW2;
+    grads.b2 = db2;
+    	
     
 %   #############################################################################
 %   #                              END OF YOUR CODE                             #
