@@ -54,7 +54,9 @@ function [ model, stats ] = twolayernet_train( model, X, y, X_val, y_val, params
 %       # TODO: Create a random minibatch of training data and labels, storing  #
 %       # them in X_batch and y_batch respectively.                             #
 %       #########################################################################
-        your code 
+        sample_indexes = randsample(num_train, batch_size, true);
+        X_batch = X(sample_indexes, :);
+        y_batch = y(sample_indexes, :); 
         
 %       #########################################################################
 %       #                             END OF YOUR CODE                          #
@@ -69,7 +71,10 @@ function [ model, stats ] = twolayernet_train( model, X, y, X_val, y_val, params
 %       # using stochastic gradient descent. You'll need to use the gradients   #
 %       # stored in the grads dictionary defined above.                         #
 %       #########################################################################
-        your code 
+        model.W1 = model.W1 - lr .* grads.W1;
+        model.b1 = model.b1 - lr .* grads.b1;
+        model.W2 = model.W2 - lr .* grads.W2;
+        model.b2 = model.b2 - lr .* grads.b2;
         
 %       #########################################################################
 %       #                             END OF YOUR CODE                          #
