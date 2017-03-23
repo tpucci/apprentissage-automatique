@@ -22,7 +22,24 @@ Aprés l'exécution on obtient une matrice de taille 500 * 5000:
 
 Imprime écran
 
+## Knn_predict_labes.m
 
+On a implémenté ici la fonction qui prédit le label de chaque exemple test.
+
+En prenant la matrice dists on trie cette matrice aprés on prend les k plus proches labels aprés en utilisant la fonction mod on obtient le label le plus commun càd le label qui se répéte le plus .
+
+Ceci est le code:
+\lstinputlisting{../assets/classifier/knn/knn_predict_labels.m}
+
+Le résultat obtenu aprés l'éxécution de cette partie est le suivant avec une accuracy de 0.274000
+
+Imprime écran
+
+## Now lets try out a larger k, say k=5
+
+Dans cette partie on a utilisé un k=5 et on a effectué le test pour obtenir une accuracy égale à ...
+
+Imprime écran
 
 ### Image
 
