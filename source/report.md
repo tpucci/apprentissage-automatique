@@ -9,11 +9,20 @@ Ce Bureau d'étude est réalisé sous le logiciel `Matlab`.
 
 -----
 
-# Partie 1
+# KNN
 
------
+## Knn_compute_distances_two_loops.m
 
-## Sous-titre
+Dans cette partie on commence par implémenter le code qui mesure la matrice distance entre tout les training et les tests exemples.Par exemple si on a Ntr training exemples et Nte exemples test on obtient une matrice de taille Nte*Ntr ou chaque élément (i,j) est la distance entre le i ème test et le j ème train et ceci via un double boucle for.
+
+Ceci est le code :
+\lstinputlisting{../assets/classifier/knn/knn_compute_distances_two_loops.m}
+
+Aprés l'exécution on obtient une matrice de taille 500 * 5000:
+
+Imprime écran
+
+
 
 ### Image
 
