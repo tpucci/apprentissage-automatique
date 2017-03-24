@@ -198,6 +198,7 @@ show_net_weights(model);
 
 best_net = {}; % store the best model into this 
 best_val = 0;
+best_stats = {};
 % #################################################################################
 % # TODO: Tune hyperparameters using the validation set. Store your best trained  #
 % # model in best_net.                                                            #
@@ -210,7 +211,60 @@ best_val = 0;
 % # write code to sweep through possible combinations of hyperparameters          #
 % # automatically like we did on the previous exercises.                          #
 % #################################################################################
-your code
+input_size = 32*32*3;
+hidden_size = 300;
+num_classes = 10 ;
+
+results ={};
+
+learning_rates = [1e-3, 1.2e-3, 1.4e-3, 1.6e-3, 1.8e-3]
+regularization_strengths = [1e-4, 1e-3, 1e-2]
+params.num_iters = 1000;
+params.batch_size = 200;
+params.learning_rate_decay = 0.95;
+ params.verbose = 1;
+
+for i=1:length(learning_rates)
+  for j=1:length(regularization_strengths)
+      model = twolayernet_init(input_size, hidden_size, num_classes);
+	  params.learning_rate = learning_rates(i);
+      params.reg = regularization_strengths(j);
+     
+      [model, stats] = twolayernet_train(model, imdb.X_train, imdb.y_train, ...
+                                   imdb.X_val, imdb.y_val, params);
+      %Predict on the validation set
+      val_acc = mean(twolayernet_predict(model, imdb.X_val) == imdb.y_val');
+	  train_acc =  mean(twolayernet_predict(model, imdb.X_train) == imdb.y_train');
+	  if best_val < val_acc
+	     best_val = val_acc;
+		 best_net = model;
+		 best_stats =stats;
+	  end
+		 
+      fprintf('Validation accuracy: %f\n', val_acc);
+	  fprintf('Training  accuracy: %f\n', train_acc);
+	end
+end
+
+%Plot the loss function and train / validation accuracies
+figure;
+subplot(2, 1, 1);
+plot(stats.loss_history);
+title('Loss history');
+xlabel('Iteration');
+ylabel('Loss');
+
+subplot(2, 1, 2);
+hold on;
+plot(stats.train_acc_history);
+plot(stats.val_acc_history);
+legend('Train', 'Val');
+title('Classification accuracy history');
+xlabel('Epoch');
+ylabel('Clasification accuracy');
+hold off;
+	  
+	  
 % #################################################################################
 % #                               END OF YOUR CODE                                #
 % #################################################################################
