@@ -1,10 +1,9 @@
 ---
-title: 'BE - Apprentissage automatique'
 author:
-- name: Mohamed Amine Mejri
-  affiliation: Ecole Centrale de Lyon
-- name: Thomas Pucci
-  affiliation: Ecole Centrale de Lyon
+- lastname: Pucci
+  firstname: Thomas
+- lastname: Mejri
+  firstname: Mohamed Amine
 tags: [kNN, Support Vector Machine, Softmax, Réseau de neuronnes, Images features]
 abstract: |
   Apprentissage automatique embarqué et mobile (S9 INFO mso 3.4).
@@ -17,6 +16,10 @@ abstract: |
   Groupe composé de Mohamed Amine Mejri et Thomas Pucci (mohamed-amine.mejri@auditeur.ec-lyon.fr; thomas.pucci@ecl13.ec-lyon.fr).
 
 geometry: a4paper, portrait, margin=.8in
-date: 09/12/2016
+date: 28/03/2017
+title: Rapport de bureaux d'étude
+subtitle: Apprentissage automatique embarqué et mobile
+subsubtitle: [S9 INFO mso 3.4]
+
 
 ...
