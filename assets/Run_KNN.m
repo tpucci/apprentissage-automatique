@@ -7,14 +7,7 @@ addpath('./dataset');
 imdb = load_datasets();
 
 % As a sanity check, we print out the size of the training and test data.
-disp('Training data shape: ');
-disp(size(imdb.train_data));
-disp('Training labels shape: ');
-disp(size(imdb.train_labels));
-disp('Test data shape: ');
-disp(size(imdb.test_data));
-disp('Test labels shape: ');
-disp(size(imdb.test_labels));
+
 
 %% Visualize some examples from the dataset.
 %We show a few examples of training images from each class.
