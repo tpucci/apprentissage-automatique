@@ -90,13 +90,15 @@ best_softmax = struct(); %The Linears model that achieved the highest validation
 % # the best trained softmax classifer in best_softmax.                          #
 % ################################################################################
 
-%iter_num = 1000;
-iter_num = 100;
-for learning = learning_rates
-    for regularization = regularization_strengths
-        [model, loss_hist] = linear_softmax_train(imdb.X_train, imdb.y_train, learning, regularization, 2000);
+iter_num = 1000;
+%iter_num = 100;
+for i = 1:length(learning_rates)
+    learning = learning_rates(i);
+    for j = 1:length(regularization_strengths)
+        regularization = regularization_strengths(j);
+        [model, loss_hist] = linear_softmax_train(imdb.X_train, imdb.y_train, learning, regularization, iter_num);
         y_train_pred = linear_softmax_predict(model, imdb.X_train);
-        train_accuracy = mean(imdb.y_train' == y_train_pred);
+        train_accuracy = mean(imdb.y_train == y_train_pred');
         fprintf('training accuracy: %f', train_accuracy); % (train_accuracy)
         y_val_pred = linear_softmax_predict(model, imdb.X_val);
         val_accuracy = mean(imdb.y_val' == y_val_pred);
@@ -107,7 +109,7 @@ for learning = learning_rates
             best_softmax = model;
         end
         
-        results(learning, regularization) = [train_accuracy, val_accuracy];
+        results(i, j, :) = [train_accuracy, val_accuracy];
     end
 end
 

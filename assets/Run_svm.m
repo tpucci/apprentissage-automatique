@@ -108,49 +108,49 @@ fprintf('loss: %f\n',loss);
 % Numerically compute the gradient along several randomly chosen dimensions, and
 % compare them with your analytically computed gradient. The numbers should match
 % almost exactly along all dimensions.
-f = @(x)svm_loss_naive(x, imdb.X_train, imdb.y_train, 0.0);
-%%%%% grad_check_sparse(f, W, grad, 10);
+%f = @(x)svm_loss_naive(x, imdb.X_train, imdb.y_train, 0.0);
+%grad_check_sparse(f, W, grad, 10);
 disp('==========================================');
 %do the gradient check once again with regularization turned on
 %you didn't forget the regularization gradient did you?
-f = @(x)svm_loss_naive(x, imdb.X_train, imdb.y_train, 1e2);
-%%%%% grad_check_sparse(f, W, grad, 10);
+%f = @(x)svm_loss_naive(x, imdb.X_train, imdb.y_train, 1e2);
+%grad_check_sparse(f, W, grad, 10);
 
 %% Next implement the function svm_loss_vectorized; for now only compute the loss;
 % we will implement the gradient in a moment.
-tic;
-[loss_naive, ~] = svm_loss_naive(W, imdb.X_train, imdb.y_train, 0.00001);
-time = toc;
-fprintf('Naive loss: %e computed in %fs\n', loss_naive, time);
-
-tic;
-[loss_vectorized, ~] = svm_loss_vectorized(W, imdb.X_train, imdb.y_train, 0.00001);
-time = toc;
-fprintf('Vectorized loss: %e computed in %fs\n', loss_vectorized, time);
+%tic;
+%[loss_naive, ~] = svm_loss_naive(W, imdb.X_train, imdb.y_train, 0.00001);
+%time = toc;
+%fprintf('Naive loss: %e computed in %fs\n', loss_naive, time);
+%
+%tic;
+%[loss_vectorized, ~] = svm_loss_vectorized(W, imdb.X_train, imdb.y_train, 0.00001);
+%time = toc;
+%fprintf('Vectorized loss: %e computed in %fs\n', loss_vectorized, time);
 
 %The losses should match but your vectorized implementation should be much faster.
-fprintf('difference: %f\n', loss_naive - loss_vectorized);
+%fprintf('difference: %f\n', loss_naive - loss_vectorized);
 
 %% Complete the implementation of svm_loss_vectorized, and compute the gradient
 % of the loss function in a vectorized way.
 % 
 % The naive implementation and the vectorized implementation should match, but
 % the vectorized version should still be much faster.
-tic;
-[~, grad_naive] = svm_loss_naive(W, imdb.X_train, imdb.y_train, 0.00001);
-time = toc;
-fprintf('Naive loss and gradient: computed in %fs\n',time);
-
-tic;
-[~, grad_vectorized] = svm_loss_vectorized(W, imdb.X_train, imdb.y_train, 0.00001);
-time = toc;
-fprintf('Vectorized loss and gradient: computed in %fs\n', time);
+%tic;
+%[~, grad_naive] = svm_loss_naive(W, imdb.X_train, imdb.y_train, 0.00001);
+%time = toc;
+%fprintf('Naive loss and gradient: computed in %fs\n',time);
+%
+%tic;
+%[~, grad_vectorized] = svm_loss_vectorized(W, imdb.X_train, imdb.y_train, 0.00001);
+%time = toc;
+%fprintf('Vectorized loss and gradient: computed in %fs\n', time);
 
 % The loss is a single number, so it is easy to compare the values computed
 % by the two implementations. The gradient on the other hand is a matrix, so
 % we use the Frobenius norm to compare them. 
-difference = norm(grad_naive - grad_vectorized, 'fro');
-fprintf('difference: %f\n', difference);
+%difference = norm(grad_naive - grad_vectorized, 'fro');
+%fprintf('difference: %f\n', difference);
 
 %% Stochastic Gradient Descent
 % We now have vectorized and efficient expressions for the loss, the gradient 
@@ -204,13 +204,15 @@ best_svm = struct(); %The LinearSVM model that achieved the highest validation r
 % # confident that your validation code works, you should rerun the validation   #
 % # code with a larger value for num_iters.                                      #
 % ################################################################################
-%iter_num = 1000;
-iter_num = 100;
-for learning = learning_rates
-    for regularization = regularization_strengths
-        [model, loss_hist] = linear_svm_train(imdb.X_train, imdb.y_train, learning, regularization, 2000);
+iter_num = 1000;
+%iter_num = 100;
+for i = 1:length(learning_rates)
+    learning = learning_rates(i);
+    for j = 1:length(regularization_strengths)
+        regularization = regularization_strengths(j);
+        [model, loss_hist] = linear_svm_train(imdb.X_train, imdb.y_train, learning, regularization, iter_num);
         y_train_pred = linear_svm_predict(model, imdb.X_train);
-        train_accuracy = mean(imdb.y_train == y_train_pred);
+        train_accuracy = mean(imdb.y_train == y_train_pred');
         fprintf('training accuracy: %f', train_accuracy); % (train_accuracy)
         y_val_pred = linear_svm_predict(model, imdb.X_val);
         val_accuracy = mean(imdb.y_val' == y_val_pred);
@@ -221,7 +223,7 @@ for learning = learning_rates
             best_svm = model;
         end
         
-        results(learning, regularization) = [train_accuracy, val_accuracy];
+        results(i, j, :) = [train_accuracy, val_accuracy];
     end
 end
 % ################################################################################

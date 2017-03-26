@@ -1,10 +1,10 @@
 ---
 author:
-- lastname: Pucci
-  firstname: Thomas
 - lastname: Mejri
   firstname: Mohamed Amine
-tags: [kNN, Support Vector Machine, Softmax, Réseau de neuronnes, Images features]
+- lastname: Pucci
+  firstname: Thomas
+tags: [kNN, Support Vector Machine, Softmax, Réseau de neuronnes, Images features, QLearning]
 abstract: |
   Apprentissage automatique embarqué et mobile (S9 INFO mso 3.4).
   k-Nearest Neighbor classifier.
