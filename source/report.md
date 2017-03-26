@@ -27,7 +27,7 @@ Aprés l'exécution on obtient une matrice de taille 500 * 5000:
 
 Imprime écran
 
-## Knn_predict_labes.m
+## Knn_predict_labels.m
 
 On a implémenté ici la fonction qui prédit le label de chaque exemple test.
 
@@ -45,6 +45,59 @@ Imprime écran
 Dans cette partie on a utilisé un k=5 et on a effectué le test pour obtenir une accuracy égale à ...
 
 Imprime écran
+
+## knn_compute_distance_one_loop.m
+
+Dans cette partie on amélioré l'algorithme qui calcule la matrice dists en utilisant une vectorisation partielle avec un seul boucle for.
+
+On peut vérifier maintenant qu'on obtient la même résultat que précédemment
+
+\lstinputlisting{../assets/classifier/knn/knn_compute_distances_one_loops.m}
+
+Imprime écran
+
+## knn_compute_distances_no_loops.m
+
+Maintenant on améliore mieux notre algorithme en calculant la matrice dists sans aucun boucle .
+
+Ceci est le code:
+\lstinputlisting{../assets/classifier/knn/knn_compute_distances_no_loops.m}
+
+On vérifie bien qu'on obtient le même résultat que précédemment
+
+Imprime écran
+
+## Let’s compare how fast the implementations are
+
+Ici on a comparé la vitesse d'éxécution de nos trois versions de clacul de la matrice dists et on remarque selon les résultats que la version knn_compute_distance_no_loops est la plus rapide 
+
+Imprime écran
+
+## Cross-validation
+
+Nous avons implémenté le k-Nearest Neighbor classificateur, mais nous avons fixé la valeur k = 5 arbitrairement. Nous allons maintenant déterminer la meilleure valeur de cet hyperparamètre avec cross validation.
+
+Nous avons divisé nos données en 5 folds ou à chaque fois on prnd une valeur de k et on utilise 4 folds pour  trainer notre model et une pour le test .
+
+Ceci est le code :
+{../assets/classifier/Run_KNN.m}
+
+Pour chaque valeur de k on obtient les résultats suivants: 
+
+Imprime écran 
+
+En se basant sur ces résultats on remarque que la meilleure valeur de k est : ...
+
+On mettant k = ...
+on traine notre model sur tout nos données train et on test sur nos données test on obtient le résultat suivant avec une accuracy égale à ...
+
+Imprime écran 
+
+
+
+
+### Image
+
 
 -----
 
@@ -270,7 +323,7 @@ linear SVM on raw pixels final test set accuracy: 0.382000
 
 ## Visualisation des résultats
 
-Voici les matrices images résultantes de l'apprentissage de l'algorithme pour chacune des classes d'images :
+Voici les matrices images résultantes de l'apprentissage de l'algorithme pour chacune des classes d'images:
 
 ![SVM weights images classes](images/SVMweights.png)
 
