@@ -18,9 +18,9 @@ Mots-clés: *kNN, Support Vector Machine, Softmax, Réseau de neuronnes, Images 
 
 ## Knn_compute_distances_two_loops.m
 
-Dans cette partie on commence par implémenter le code qui mesure la matrice distance entre tout les training et les tests exemples.Par exemple si on a Ntr training exemples et Nte exemples test on obtient une matrice de taille Nte*Ntr ou chaque élément (i,j) est la distance entre le i ème test et le j ème train et ceci via un double boucle for.
+Dans cette partie on commence par implémenter le code qui mesure la matrice distance entre les exemples issus des training et tests sets.Par exemple si on a $Ntr$ training exemples et $Nte$ exemples test on obtient une matrice de taille $Nte*Ntr$ où chaque élément $(i,j)$ est la distance entre le $i$ ème test et le $j$ ème train et ceci via une double boucle `for`.
 
-Ceci est le code :
+Voici le code correspondant:
 \lstinputlisting{../assets/classifier/knn/knn_compute_distances_two_loops.m}
 
 Aprés l'exécution on obtient une matrice de taille 500 * 5000:
@@ -33,12 +33,13 @@ Aprés l'exécution on obtient une matrice de taille 500 * 5000:
 
 On a implémenté ici la fonction qui prédit le label de chaque exemple test.
 
-En prenant la matrice dists on trie cette matrice aprés on prend les k plus proches labels aprés en utilisant la fonction mod on obtient le label le plus commun càd le label qui se répéte le plus .
+En prenant la matrice dists triée, nous choisissons les k plus proches labels pour chaque exemple test. Ensuite, en utilisant la fonction mod, nous obtenons le label le plus commun c'est-à-dire le label qui se répéte le plus.
 
-Ceci est le code:
+Voici le code correspondant:
+
 \lstinputlisting{../assets/classifier/knn/knn_predict_labels.m}
 
-Le résultat obtenu aprés l'éxécution de cette partie est le suivant avec une accuracy de 0.274000
+Le résultat obtenu aprés l'éxécution de cette partie est le suivant : l'accuracy est de 0.274.
 
 ```bash
     Got 137 / 500 correct => accuracy: 0.274000 
@@ -46,7 +47,7 @@ Le résultat obtenu aprés l'éxécution de cette partie est le suivant avec une
 
 ## Now lets try out a larger k, say k=5
 
-Dans cette partie on a utilisé un k=5 et on a effectué le test pour obtenir une accuracy égale à 0.278000
+Dans cette partie nous choisissons $k=5$ : nous obtenons une accuracy égale à 0.278.
 
 ```bash
     Got 139 / 500 correct => accuracy: 0.278000
@@ -54,9 +55,9 @@ Dans cette partie on a utilisé un k=5 et on a effectué le test pour obtenir un
 
 ## knn_compute_distance_one_loop.m
 
-Dans cette partie on amélioré l'algorithme qui calcule la matrice dists en utilisant une vectorisation partielle avec un seul boucle for.
+Dans cette partie nous améliorons l'algorithme qui calcule la matrice dists en utilisant une vectorisation partielle avec une seul boucle `for`.
 
-On peut vérifier maintenant qu'on obtient la même résultat que précédemment
+On peut alors vérifier que nous obtenons le même résultat qu'avec la méthode précédente:
 
 \lstinputlisting{../assets/classifier/knn/knn_compute_distances_one_loops.m}
 
@@ -68,12 +69,12 @@ On peut vérifier maintenant qu'on obtient la même résultat que précédemment
 
 ## knn_compute_distances_no_loops.m
 
-Maintenant on améliore mieux notre algorithme en calculant la matrice dists sans aucun boucle .
+Maintenant nous améliorons notre algorithme en calculant la matrice dists sans aucune boucle `for`.
 
-Ceci est le code:
+Voici le code correspondant:
 \lstinputlisting{../assets/classifier/knn/knn_compute_distances_no_loops.m}
 
-On vérifie bien qu'on obtient le même résultat que précédemment
+On peut alors vérifier que nous obtenons le même résultat qu'avec la méthode précédente:
 
 ```bash
     Difference was: 0.000000
@@ -82,7 +83,7 @@ On vérifie bien qu'on obtient le même résultat que précédemment
 
 ## Let’s compare how fast the implementations are
 
-Ici on a comparé la vitesse d'éxécution de nos trois versions de clacul de la matrice dists et on remarque selon les résultats que la version knn_compute_distance_no_loops est la plus rapide 
+Ici nous avons comparé la vitesse d'éxécution de nos trois versions de clacul de la matrice dists. Nous remarquons d'après les résultats que la version `knn_compute_distance_no_loops` est effectivement la plus rapide:
 
 ```bash
 Two loop version took 246.553474 seconds
@@ -92,9 +93,9 @@ No loop version took 0.508954 seconds
 
 ## Cross-validation
 
-Nous avons implémenté le k-Nearest Neighbor classificateur, mais nous avons fixé la valeur k = 5 arbitrairement. Nous allons maintenant déterminer la meilleure valeur de cet hyperparamètre avec cross validation.
+Nous avons implémenté le k-Nearest Neighbor classifieur, mais nous avons fixé la valeur $k = 5$ arbitrairement. Nous allons maintenant déterminer la meilleure valeur de cet hyperparamètre avec cross validation.
 
-Nous avons divisé nos données en 5 folds ou à chaque fois on prnd une valeur de k et on utilise 4 folds pour  trainer notre model et une pour le test .
+Nous avons divisé nos données en 5 folds pour lesquels nous prenons à chaque fois une valeur de k.
 
 ```
 % ################################################################################
@@ -206,10 +207,9 @@ k = 100, accuracy = 0.263000
 
 ![Cross-validation on k](images/cross_val graph.png)
 
-En se basant sur ces résultats on remarque que la meilleure valeur de k est : 6
+En se basant sur ces résultats on remarque que la meilleure valeur de k est $k=6$.
 
-On mettant k = 6
-on traine notre model sur tout nos données train et on test sur nos données test on obtient le résultat suivant avec une accuracy égale à peu prés à 0.282000
+En coisissant $k = 6$ nous entrainons notre modèle sur toutes nos données train. Sur l'ensemble de test, nous obtenons le résultat suivant avec une accuracy égale à peu prés à 0.282.
 
 ```bash
     Got 141 / 500 correct => accuracy: 0.282000
@@ -674,11 +674,11 @@ On remarque que les images sont bien plus lisses que celles générées par le c
 
 # Neural Network
 
-Dans cette exercice on a développé un réseau de neuronnes composé de deux couches.
+Dans cette exercice nous développons un réseau de neuronnes composé de deux couches.
 
 ## Forward pass: compute scores
 
-Dans cette partie on a implémenté la prmière partie de la fonction twolayernet_loss qui prend les données et les poids et calcule ainsi les scores des classes
+Dans cette partie nous implémentons la première partie de la fonction `twolayernet_loss` qui prend les données et les poids et calcule ainsi les scores des classes:
 
 ```
     res=X * model.W1 + repmat(model.b1,N,1);
@@ -688,7 +688,7 @@ Dans cette partie on a implémenté la prmière partie de la fonction twolayerne
 
 
 
-on obtient comme résultats la différence entre nos scores et les scores correctes :
+Nous obtenons comme résultats la différence entre nos scores et les scores corrects :
 
 ```bash
 Your scores:
@@ -711,7 +711,7 @@ Difference between your scores and correct scores:
 ```
 ## Forward pass: compute loss
 
-Dans la deuxième partie on s'occupe du calcul du loss et du "regularization loss"
+Dans la deuxième partie on s'occupe du calcul du loss et du "regularization loss":
 
 ```
 scores = exp(scores) ./ repmat(sum(exp(scores),2),1,size(scores,2)); 
@@ -735,7 +735,7 @@ Difference between your loss and correct loss:
 
 ## Backward pass
 
-Aprés l'implémentation du forward pass on a débuggé notre backward pass en utilisant le gradient numérique.
+Aprés l'implémentation du forward pass nous debuggons notre backward pass en utilisant le gradient numérique.
 
 On a obtenu le résultat suivant :
 
@@ -751,7 +751,7 @@ b2 max relative error :3.292164e-11
 
 ## Train the network
 
-Dans cette partie on a implémenté la fonction twoLayernet_train qui s'occupe de la procédure du train de notre data.
+Dans cette partie on a implémenté la fonction `twoLayernet_train` qui s'occupe de la procédure du train de notre data.
 
 ```
 sample_indexes = randsample(num_train, batch_size, true);
@@ -765,7 +765,8 @@ sample_indexes = randsample(num_train, batch_size, true);
         model.W2 = model.W2 - lr .* grads.W2;
         model.b2 = model.b2 - lr .* grads.b2;
 ```
-Aprés on implémente la fonction twoLayernet_predict pour que notre algorithme effectue la procédure de prédiction à fur et à mesure que notre modèle s'entraîne 
+
+Ensuite nous implémentons la fonction twoLayernet_predict pour que notre algorithme effectue la procédure de prédiction à fur et à mesure que notre modèle est entraîné.
 
 ```
  scores = twolayernet_loss( model, X);
@@ -773,7 +774,8 @@ Aprés on implémente la fonction twoLayernet_predict pour que notre algorithme 
  y_pred = y_pred'; 
 
 ```
-Enfin on applique ce notre modèle sur les données toy et on obtient le résultat suivant:
+
+Enfin on applique ce modèle sur les données test et on obtient le résultat suivant:
 
 ```bash
 Final training loss: 0.033668
@@ -795,11 +797,11 @@ Validation accuracy: 0.290000
 
 ## Debug the training
 
-Avec les paramètres par défaut , nous avons obtenu une précision de validation d'environ 0,29 sur l'ensemble de validation. Ce n'est pas très bon.
+Avec les paramètres par défaut, nous avons obtenu une précision de validation d'environ 0,29 sur l'ensemble de validation. Ce n'est pas très bon.
 
-Une stratégie pour obtenir un aperçu de ce qui ne va pas est de tracer la fonction de perte et les précisions sur les ensembles de formation et de validation au cours de l'optimisation.
+Une stratégie pour obtenir un aperçu de ce qui ne va pas est de tracer la fonction de perte et les précisions sur les ensembles de training et de validation au cours de l'optimisation.
 
-Une autre stratégie est de visualiser les poids qui ont été apprises dans la première couche du réseau. Dans la plupart des réseaux de neurones formés sur des données visuelles, les poids des premières couches montrent typiquement une certaine structure visible lorsqu'ils sont visualisés.
+Une autre stratégie est de visualiser les poids qui ont été appris dans la première couche du réseau. Dans la plupart des réseaux de neurones formés sur des données visuelles, les poids des premières couches montrent typiquement une certaine structure visible lorsqu'ils sont visualisés.
 
 On a obtenu les résultats suivants:
 
@@ -811,9 +813,9 @@ On a obtenu les résultats suivants:
 
 En regardant les visualisations ci-dessus, nous voyons que la perte diminue plus ou moins linéairement, ce qui semble suggérer que le taux d'apprentissage peut être trop faible. En outre, il n'y a pas d'écart entre la formation et la précision de validation, ce qui suggère que le modèle que nous avons utilisé a une faible capacité, et que nous devrions augmenter sa taille. D'autre part, avec un modèle très grand nous nous attendons à voir plus de surfaçage, ce qui se manifesterait comme un très grand écart entre la formation et la précision de validation.
 
-Réglage: Le tuning des hyperparamètres et le développement de l'intuition pour la façon dont ils affectent la performance finale est une grande partie de l'utilisation de réseaux neuronaux, donc nous avons testé différentes valeurs des différents hyperparamètres, y compris la taille de la couche cachée, le taux d'apprentissage, le nombre d'époques de formation et la force de régularisation. 
+Réglage: Le tuning des hyperparamètres et le développement de l'intuition pour la façon dont ils affectent la performance finale est une grande partie de l'utilisation de réseaux neuronaux. Donc nous avons testé différentes valeurs des différents hyperparamètres, y compris la taille de la couche cachée, le taux d'apprentissage, le nombre d'époques de formation et la force de régularisation. 
 
-Ceci sont les résultats de l'exécution de plusieurs paramètres:
+Ceci sont les résultats de l'exécution selon les différents paramètres:
 
 ```bash
 learning_rates =
@@ -1006,17 +1008,14 @@ iteration 900 / 1000: loss 1.495618
 iteration 1000 / 1000: loss 1.296093
 Validation accuracy: 0.476000
 Training  accuracy: 0.540143
-Warning: Image is too big to fit on screen; displaying at 67%
-> In images.internal.initSize (line 71)
-  In imshow (line 309)
-  In Run_two_layer_net/show_net_weights (line 186)
-  In Run_two_layer_net (line 273)
 Test accuracy: 0.495000
 
 ```
-On a testé 15 combinaisons différentes et on a obtenu pour certaines de très bonnes résultats d'accuracy.
+On a testé 15 combinaisons différentes et on a obtenu pour certaines de très bons résultats d'accuracy.
 
-Finalement quand on a évalué notre réseau formé final sur l'ensemble de test, nous avons trouvé une accuracy = 0.495000
+Finalement quand nous évaluons notre réseau final sur l'ensemble de test, nous avons trouvé une accuracy de 0.495.
+
+----
 
 # Q-Learning
 
