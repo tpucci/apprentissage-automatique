@@ -149,6 +149,131 @@ params.verbose = 1;
 val_acc = mean(twolayernet_predict(model, imdb.X_val) == imdb.y_val');
 fprintf('Validation accuracy: %f\n', val_acc);
 
+%% Debug the training
+% With the default parameters we provided above, you should get a validation 
+% accuracy of about 0.29 on the validation set. This isn't very good.
 
+%One strategy for getting insight into what's wrong is to plot the loss 
+%function and the accuracies on the training and validation sets during optimization.
+
+%Another strategy is to visualize the weights that were learned in the first
+% layer of the network. In most neural networks trained on visual data, the
+% first layer weights typically show some visible structure when visualized.
+
+%Plot the loss function and train / validation accuracies
+figure;
+subplot(2, 1, 1);
+plot(stats.loss_history);
+title('Loss history');
+xlabel('Iteration');
+ylabel('Loss');
+
+subplot(2, 1, 2);
+hold on;
+plot(stats.train_acc_history);
+plot(stats.val_acc_history);
+legend('Train', 'Val');
+title('Classification accuracy history');
+xlabel('Epoch');
+ylabel('Clasification accuracy');
+hold off;
+
+%% Visualize the weights of the network
+function []= show_net_weights(model)
+    W1 = reshape(model.W1', [], 32, 32, 3);
+    grid = visualize_grid(W1);
+    figure;
+    imshow(uint8(grid));
+end
+show_net_weights(model);
+
+%% Tune your hyperparameters
+% Tuning. Tuning the hyperparameters and developing intuition for how they 
+% affect the final performance is a large part of using Neural Networks,
+% so we want you to get a lot of practice. Below, you should experiment with 
+% different values of the various hyperparameters, including hidden layer size,
+% learning rate, numer of training epochs, and regularization strength. 
+% You might also consider tuning the learning rate decay, but you should 
+% be able to get good performance using the default value.
+
+best_net = {}; % store the best model into this 
+best_val = 0;
+best_stats = {};
+% #################################################################################
+% # TODO: Tune hyperparameters using the validation set. Store your best trained  #
+% # model in best_net.                                                            #
+% #                                                                               #
+% # To help debug your network, it may help to use visualizations similar to the  #
+% # ones we used above; these visualizations will have significant qualitative    #
+% # differences from the ones we saw above for the poorly tuned network.          #
+% #                                                                               #
+% # Tweaking hyperparameters by hand can be fun, but you might find it useful to  #
+% # write code to sweep through possible combinations of hyperparameters          #
+% # automatically like we did on the previous exercises.                          #
+% #################################################################################
+input_size = 32*32*3;
+hidden_size = 300;
+num_classes = 10 ;
+
+results ={};
+
+learning_rates = [1e-3, 1.2e-3, 1.4e-3, 1.6e-3, 1.8e-3]
+regularization_strengths = [1e-4, 1e-3, 1e-2]
+params.num_iters = 1000;
+params.batch_size = 200;
+params.learning_rate_decay = 0.95;
+ params.verbose = 1;
+
+for i=1:length(learning_rates)
+  for j=1:length(regularization_strengths)
+      model = twolayernet_init(input_size, hidden_size, num_classes);
+	  params.learning_rate = learning_rates(i);
+      params.reg = regularization_strengths(j);
+     
+      [model, stats] = twolayernet_train(model, imdb.X_train, imdb.y_train, ...
+                                   imdb.X_val, imdb.y_val, params);
+      %Predict on the validation set
+      val_acc = mean(twolayernet_predict(model, imdb.X_val) == imdb.y_val');
+	  train_acc =  mean(twolayernet_predict(model, imdb.X_train) == imdb.y_train');
+	  if best_val < val_acc
+	     best_val = val_acc;
+		 best_net = model;
+		 best_stats =stats;
+	  end
+		 
+      fprintf('Validation accuracy: %f\n', val_acc);
+	  fprintf('Training  accuracy: %f\n', train_acc);
+	end
+end
+
+%Plot the loss function and train / validation accuracies
+figure;
+subplot(2, 1, 1);
+plot(stats.loss_history);
+title('Loss history');
+xlabel('Iteration');
+ylabel('Loss');
+
+subplot(2, 1, 2);
+hold on;
+plot(stats.train_acc_history);
+plot(stats.val_acc_history);
+legend('Train', 'Val');
+title('Classification accuracy history');
+xlabel('Epoch');
+ylabel('Clasification accuracy');
+hold off;
+	  
+	  
+% #################################################################################
+% #                               END OF YOUR CODE                                #
+% #################################################################################
+
+%%  visualize the weights of the best network
+show_net_weights(best_net);
+
+%% Run on the test set
+test_acc = mean(twolayernet_predict(best_net, imdb.X_test) == imdb.y_test');
+fprintf('Test accuracy: %f\n', test_acc);
 end
 
