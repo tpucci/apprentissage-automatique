@@ -1113,7 +1113,7 @@ Dans le script principal, nous appelons cette fonction sur chacun des épisodes 
 ```
 for i = 1:nEpisodes % Boucle de nEpisodes
     beginningState = randomStates(i);
-    Q = qLearn(Q,R,alpha,gamma,6, 5+1); % Appel de la fonction récursive qLearn
+    Q = qLearn(Q,R,alpha,gamma,beginningState, 5+1); % Appel de la fonction récursive qLearn
 end
 ```
 

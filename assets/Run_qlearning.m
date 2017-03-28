@@ -37,7 +37,7 @@ randomStates = randi([1 size(R,2)],1,100);
 
 for i = 1:nEpisodes % Boucle de nEpisodes
     beginningState = randomStates(i);
-    Q = qLearn(Q,R,alpha,gamma,6, 5+1); % Appel de la fonction récursive qLearn
+    Q = qLearn(Q,R,alpha,gamma,beginningState, 5+1); % Appel de la fonction récursive qLearn
 end
 
 QNormalized = round(Q./max(max(round(Q)))*100) % Affichage du résultat arrondi
